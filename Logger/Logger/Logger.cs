@@ -48,7 +48,7 @@ namespace Logger
             string pathFile = Path.Combine(path, "errors.txt");
             using (StreamWriter sw = new StreamWriter(pathFile, true))
             {
-                sw.WriteLine($"{DateTime.Now} (ERRORS): Тип: {ex.GetType().Name}, Исключение: {ex.Message}, Метод: {ex.TargetSite}");
+                sw.WriteLine($"{DateTime.Now} (ERROR): Тип: {ex.GetType().Name}, Исключение: {ex.Message}");
             }
         }
 
