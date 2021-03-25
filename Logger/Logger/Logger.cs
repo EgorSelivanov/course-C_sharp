@@ -143,8 +143,12 @@ namespace Logger
 
         private void IsCreateFolder()
         {
-            if (!Directory.Exists(path)) 
+            if (!Directory.Exists(path))
+            {
                 Directory.CreateDirectory(path);
+                UniqueErrors.Clear();
+                UniqueWarnings.Clear();
+            }
         }
 
         private void IsCreateFile(string file)
