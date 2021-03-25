@@ -50,6 +50,8 @@ namespace Logger
             {
                 sw.WriteLine($"{DateTime.Now} (ERROR): Тип: {ex.GetType().Name}, Исключение: {ex.Message}");
             }
+            if (!UniqueErrors.Contains(ex.Message))
+                UniqueErrors.Add(ex.Message);
         }
 
         public void ErrorUnique(string message, Exception e)
@@ -72,6 +74,8 @@ namespace Logger
             IsCreateFolder();
             IsCreateFile("info.txt");
             WriteErrorMessage("info.txt", "WARNING", message, e);
+            if (!UniqueWarnings.Contains(message))
+                UniqueWarnings.Add(message);
         }
 
         public void WarningUnique(string message)
