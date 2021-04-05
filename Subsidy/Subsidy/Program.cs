@@ -4,9 +4,21 @@ namespace ClassLibrary1
 {
     class Program
     {
+        static void Notify(object source, string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        static void Excep(object source, Tuple<string, Exception> tuple)
+        {
+            Console.WriteLine(tuple.Item2);
+        }
+
         static void Main(string[] args)
         {
             SubsidyCalculation subCalculation = new SubsidyCalculation();
+            subCalculation.OnNotify += Notify;
+            subCalculation.OnException += Excep;
 
             //правильные значения
             Tariff tariff1 = new Tariff()
