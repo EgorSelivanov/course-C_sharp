@@ -10,6 +10,10 @@ namespace testRedisSub
         private IDatabase db;
         private string comand;
         public string User { get; private set; }
+
+        /// <summary>
+        /// Инициализация чата: установка хоста, получение связи с бд Redis
+        /// </summary>
         public Chat()
         {
             options = new ConfigurationOptions();
@@ -21,6 +25,9 @@ namespace testRedisSub
             comand = "";
         }
 
+        /// <summary>
+        /// Запуск чата: работа с меню и обработка команд
+        /// </summary>
         public void StartChat()
         {
             Console.WriteLine("Введите своё имя пользователя:");
@@ -41,6 +48,9 @@ namespace testRedisSub
             }
         }
 
+        /// <summary>
+        /// Ввод сообщения пользователем и Push в бд Redis
+        /// </summary>
         public void InputMethod()
         {
             Console.WriteLine("Введите сообщение:");
@@ -49,6 +59,9 @@ namespace testRedisSub
             Console.WriteLine("Сообщение добавлено в список!");
         }
 
+        /// <summary>
+        /// Запрос всех сообщений из бд Redis и вывод на экран
+        /// </summary>
         public void GetMesMethod()
         {
             if (db.KeyExists(User))
@@ -60,6 +73,9 @@ namespace testRedisSub
                 Console.WriteLine("Для данного пользователя нет сообщений.");
         }
 
+        /// <summary>
+        /// Очистить весь список сообщений в бд Redis
+        /// </summary>
         public void DelMesMethod()
         {
             if (db.KeyExists(User))
@@ -73,6 +89,9 @@ namespace testRedisSub
                 Console.WriteLine("Для данного пользователя нет сообщений.");
         }
 
+        /// <summary>
+        /// Смена пользователя
+        /// </summary>
         public void ChangeUserMethod()
         {
             Console.WriteLine("Введите новое имя пользователя:");
@@ -80,15 +99,25 @@ namespace testRedisSub
             Console.WriteLine($"Новое имя пользователя: {User}.");
         }
 
+        /// <summary>
+        /// Действие при завершении работы чата
+        /// </summary>
         public void ExitMethod()
         {
             Console.WriteLine($"Работа чата завершена, спасибо за работу, {User}");
         }
 
-        public void ElseMethod()
+        /// <summary>
+        /// Действие при некорректном вводе данных(команды)
+        /// </summary>
+        public void InvalidInputMethod()
         {
             Console.WriteLine("Неверный ввод! Повторите попытку!");
         }
+
+        /// <summary>
+        /// Возвращает ссылку на метод в зависимости от команды пользователя
+        /// </summary>
         public Action GetActionByComand(string comand)
         {
             switch (comand)
@@ -98,7 +127,7 @@ namespace testRedisSub
                 case "/delMes": return DelMesMethod;
                 case "/changeUser": return ChangeUserMethod;
                 case "/exit": return ExitMethod;
-                default: return ElseMethod;
+                default: return InvalidInputMethod;
             }
         }
 
